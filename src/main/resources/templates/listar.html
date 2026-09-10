@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}">Listado de Clientes</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Hoja de estilos estática -->
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="header-title" th:text="${titulo}">Listado de Clientes</h1>
+        <p class="header-subtitle">Gestión de usuarios y registros del sistema</p>
+
+        <!-- Vista rápida de Atributos -->
+        <ul class="fields-overview">
+            <li>ID</li>
+            <li>Nombre</li>
+            <li>Apellido</li>
+            <li>Email</li>
+            <li>Fecha de Creación</li>
+        </ul>
+
+        <!-- Botón Crear Cliente -->
+        <div style="margin-bottom: 1.5rem; display: flex; justify-content: flex-end;">
+            <a th:href="@{/Cliente/form}" class="btn btn-primary" style="max-width: 180px;">+ Crear Cliente</a>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Lista de Tarjetas de Clientes -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="client-card" th:each="cliente : ${clientes}">
+                <div class="client-header">
+                    <h2 class="client-name-title" th:text="${cliente.nombre + ' ' + cliente.apellido}"></h2>
+                    <div style="display: flex; align-items: center; gap: 0.8rem;">
+                        <span class="client-id-badge" th:text="${'ID #' + cliente.id}"></span>
+                        <a th:href="@{/Cliente/form/} + ${cliente.id}" style="color: #a855f7; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 6px;">Editar</a>
+                        <a th:href="@{/Cliente/eliminar/} + ${cliente.id}" onclick="return confirm('¿Seguro que deseas eliminar este cliente?');" style="color: #f87171; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(248, 113, 113, 0.4); border-radius: 6px;">Eliminar</a>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Nombre Completo</span>
+                        <p class="info-value" th:text="${cliente.nombre + ' ' + cliente.apellido}"></p>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">Correo Electrónico</span>
+                        <p class="info-value" th:text="${cliente.email}"></p>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">Fecha de Registro</span>
+                        <p class="info-value" th:text="${#dates.format(cliente.createAt, 'dd/MM/yyyy HH:mm')}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer-note">Sistema de Consulta de Clientes &bull; Spring Boot & Thymeleaf</p>
+    </div>
+</body>
+
+</html>
