@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.demo.Modelos.Entity.Cliente;
 
 // Esta interfaz define los metodos que se van a utilizar para la interacción con la base de datos
-public interface ClienteDAO_Interface {
+public interface InterfaceClienteDAO {
 
     public List<Cliente> findAll();
 

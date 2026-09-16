@@ -18,7 +18,7 @@
         <div class="form-container">
             <h1 class="header-title" style="text-align: center; margin-bottom: 1.5rem;" th:text="${titulo}">Formulario de Cliente</h1>
 
-            <form th:action="@{/Cliente/form}" th:object="${cliente}" method="post">
+            <form th:action="@{/Cliente/formulario}" th:object="${cliente}" method="post">
                 <input type="hidden" th:field="*{id}" />
 
                 <div class="form-group">

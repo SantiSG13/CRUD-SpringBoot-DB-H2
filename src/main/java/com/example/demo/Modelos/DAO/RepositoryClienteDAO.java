@@ -12,19 +12,19 @@ import jakarta.persistence.PersistenceContext;
 
 // Esta clase sirve para la persistencia de datos y la interacción con la base de datos
 @Repository
-public class ClienteDAO_Repository implements ClienteDAO_Interface {
+public class RepositoryClienteDAO implements InterfaceClienteDAO {
 
     @PersistenceContext
     private EntityManager em;
 
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // Sirve para que el metodo solo lea la base de datos, sin modificarla
     @Override
     public List<Cliente> findAll() {
         return em.createQuery("from Cliente").getResultList();
     }
 
-    @Transactional
+    @Transactional // Sirve para que el metodo guarde o modifique la base de datos
     @Override
     public void save(Cliente cliente) {
         if (cliente.getId() != null && cliente.getId() > 0) {

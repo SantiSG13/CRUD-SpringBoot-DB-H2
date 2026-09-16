@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}">Listado de Productos</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Hoja de estilos estática -->
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="header-title" th:text="${titulo}">Listado de Productos</h1>
+        <p class="header-subtitle">Gestión e inventario de productos del sistema</p>
+
+        <!-- Vista rápida de Atributos -->
+        <ul class="fields-overview">
+            <li>ID</li>
+            <li>Nombre</li>
+            <li>Precio</li>
+            <li>Stock</li>
+            <li>Categoría</li>
+            <li>Descripción</li>
+        </ul>
+
+        <!-- Botones de Acción -->
+        <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <a th:href="@{/Cliente/listar}" class="btn btn-secondary" style="max-width: 180px;">&larr; Ver Clientes</a>
+            <a th:href="@{/Producto/formulario}" class="btn btn-primary" style="max-width: 180px;">+ Crear Producto</a>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Lista de Tarjetas de Productos -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="client-card" th:each="producto : ${productos}">
+                <div class="client-header">
+                    <h2 class="client-name-title" th:text="${producto.nombre}"></h2>
+                    <div style="display: flex; align-items: center; gap: 0.8rem;">
+                        <span class="client-id-badge" th:text="${'ID #' + producto.id}"></span>
+                        <a th:href="@{/Producto/formulario/} + ${producto.id}"
+                            style="color: #a855f7; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 6px;">Editar</a>
+                        <a th:href="@{/Producto/eliminar/} + ${producto.id}"
+                            onclick="return confirm('¿Seguro que deseas eliminar este producto?');"
+                            style="color: #f87171; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(248, 113, 113, 0.4); border-radius: 6px;">Eliminar</a>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Categoría</span>
+                        <p class="info-value" th:text="${producto.categoria}"></p>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">Precio</span>
+                        <p class="info-value" th:text="${'$' + #numbers.formatDecimal(producto.precio, 1, 'POINT', 2, 'COMMA')}"></p>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">Stock Disponible</span>
+                        <p class="info-value" th:text="${producto.stock + ' unidades'}"></p>
+                    </div>
+
+                    <div class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Descripción</span>
+                        <p class="info-value" th:text="${producto.descripcion != null && !producto.descripcion.isEmpty() ? producto.descripcion : 'Sin descripción'}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer-note">Sistema de Inventario de Productos &bull; Spring Boot & Thymeleaf</p>
+    </div>
+</body>
+
+</html>

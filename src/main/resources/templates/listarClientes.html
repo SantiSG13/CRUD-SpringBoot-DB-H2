@@ -8,8 +8,10 @@
     <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
     <!-- Hoja de estilos estática -->
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
@@ -28,9 +30,10 @@
             <li>Fecha de Creación</li>
         </ul>
 
-        <!-- Botón Crear Cliente -->
-        <div style="margin-bottom: 1.5rem; display: flex; justify-content: flex-end;">
-            <a th:href="@{/Cliente/form}" class="btn btn-primary" style="max-width: 180px;">+ Crear Cliente</a>
+        <!-- Botones de Acción -->
+        <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <a th:href="@{/Producto/listar}" class="btn btn-secondary" style="max-width: 180px;">Ver Productos &rarr;</a>
+            <a th:href="@{/Cliente/formulario}" class="btn btn-primary" style="max-width: 180px;">+ Crear Cliente</a>
         </div>
 
         <div class="divider"></div>
@@ -42,8 +45,11 @@
                     <h2 class="client-name-title" th:text="${cliente.nombre + ' ' + cliente.apellido}"></h2>
                     <div style="display: flex; align-items: center; gap: 0.8rem;">
                         <span class="client-id-badge" th:text="${'ID #' + cliente.id}"></span>
-                        <a th:href="@{/Cliente/form/} + ${cliente.id}" style="color: #a855f7; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 6px;">Editar</a>
-                        <a th:href="@{/Cliente/eliminar/} + ${cliente.id}" onclick="return confirm('¿Seguro que deseas eliminar este cliente?');" style="color: #f87171; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(248, 113, 113, 0.4); border-radius: 6px;">Eliminar</a>
+                        <a th:href="@{/Cliente/formulario/} + ${cliente.id}"
+                            style="color: #a855f7; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 6px;">Editar</a>
+                        <a th:href="@{/Cliente/eliminar/} + ${cliente.id}"
+                            onclick="return confirm('¿Seguro que deseas eliminar este cliente?');"
+                            style="color: #f87171; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid rgba(248, 113, 113, 0.4); border-radius: 6px;">Eliminar</a>
                     </div>
                 </div>
 

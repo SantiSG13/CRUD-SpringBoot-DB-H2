@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.Modelos.DAO.ClienteDAO_Interface;
+import com.example.demo.Modelos.DAO.InterfaceClienteDAO;
 import com.example.demo.Modelos.Entity.Cliente;
 
 @Controller
@@ -19,25 +19,25 @@ import com.example.demo.Modelos.Entity.Cliente;
 public class ClienteController {
 
     @Autowired
-    private ClienteDAO_Interface clienteDAO;
+    private InterfaceClienteDAO clienteDAO;
 
     @GetMapping("/listar")
     public String ListarClientes(Model model) {
         model.addAttribute("titulo", "Listado de Clientes");
         List<Cliente> clientes = clienteDAO.findAll();
         model.addAttribute("clientes", clientes);
-        return "listar";
+        return "listarClientes";
     }
 
-    @GetMapping("/form")
+    @GetMapping("/formulario")
     public String crear(Model model) {
         Cliente cliente = new Cliente();
         model.addAttribute("cliente", cliente);
         model.addAttribute("titulo", "Formulario de Cliente");
-        return "form";
+        return "formularioClientes";
     }
 
-    @GetMapping("/form/{id}")
+    @GetMapping("/formulario/{id}")
     public String editar(@PathVariable(value = "id") Long id, Model model) {
         Cliente cliente = null;
         if (id > 0) {
@@ -47,10 +47,10 @@ public class ClienteController {
         }
         model.addAttribute("cliente", cliente);
         model.addAttribute("titulo", "Editar Cliente");
-        return "form";
+        return "formularioClientes";
     }
 
-    @PostMapping("/form")
+    @PostMapping("/formulario")
     public String guardar(Cliente cliente) {
         if (cliente.getCreateAt() == null) {
             cliente.setCreateAt(new Date());
