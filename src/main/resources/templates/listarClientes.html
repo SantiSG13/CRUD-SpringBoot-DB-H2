@@ -5,72 +5,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titulo}">Listado de Clientes</title>
-    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-        rel="stylesheet">
 
-    <!-- Hoja de estilos estática -->
+    <!-- Hoja de estilos estática centralizada -->
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
 <body>
     <div class="contenedor-principal">
-        <h1 class="titulo-principal" th:text="${titulo}">Listado de Clientes</h1>
-        <p class="subtitulo-principal">Gestión de usuarios y registros del sistema</p>
 
-        <!-- Vista rápida de Atributos -->
-        <ul class="resumen-campos">
-            <li>ID</li>
-            <li>Nombre</li>
-            <li>Apellido</li>
-            <li>Email</li>
-            <li>Fecha de Creación</li>
-        </ul>
-
-        <!-- Botones de Acción -->
-        <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-            <a th:href="@{/Producto/listar}" class="boton boton-secundario" style="max-width: 180px;">Ver Productos &rarr;</a>
-            <a th:href="@{/Cliente/formulario}" class="boton boton-principal" style="max-width: 180px;">+ Crear Cliente</a>
+        <!-- Encabezado de la página -->
+        <div class="encabezado-seccion">
+            <h1 class="titulo-pagina" th:text="${titulo}">Listado de Clientes</h1>
+            <p class="subtitulo-pagina">Gestión de usuarios y registros del sistema</p>
         </div>
 
-        <div class="linea-divisora"></div>
+        <!-- Atributos del modelo (Badges) -->
+        <ul class="lista-atributos">
+            <li class="insignia">ID</li>
+            <li class="insignia">Nombre</li>
+            <li class="insignia">Apellido</li>
+            <li class="insignia">Email</li>
+            <li class="insignia">Fecha de Creación</li>
+        </ul>
 
-        <!-- Lista de Tarjetas de Clientes -->
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-            <div class="tarjeta" th:each="cliente : ${clientes}">
-                <div class="encabezado-tarjeta">
-                    <h2 class="titulo-tarjeta" th:text="${cliente.nombre + ' ' + cliente.apellido}"></h2>
-                    <div style="display: flex; align-items: center; gap: 0.8rem;">
-                        <span class="etiqueta-id" th:text="${'ID #' + cliente.id}"></span>
-                        <a th:href="@{/Cliente/formulario/} + ${cliente.id}" class="boton-editar">Editar</a>
-                        <a th:href="@{/Cliente/eliminar/} + ${cliente.id}"
-                            onclick="return confirm('¿Seguro que deseas eliminar este cliente?');"
-                            class="boton-eliminar">Eliminar</a>
+        <!-- Botones de navegación y acción -->
+        <div class="barra-acciones">
+            <a th:href="@{/Producto/listar}" class="btn btn-secundario">Ver Productos &rarr;</a>
+            <a th:href="@{/Cliente/formulario}" class="btn btn-principal">+ Crear Cliente</a>
+        </div>
+
+        <div class="linea-separadora"></div>
+
+        <!-- Lista de Clientes en Tarjetas -->
+        <div>
+            <div th:each="cliente : ${clientes}" class="tarjeta-registro">
+                
+                <!-- Cabecera de la tarjeta -->
+                <div class="tarjeta-cabecera">
+                    <h2 class="tarjeta-titulo" th:text="${cliente.nombre + ' ' + cliente.apellido}"></h2>
+                    
+                    <div class="tarjeta-acciones">
+                        <span class="insignia" th:text="${'ID #' + cliente.id}"></span>
+                        <a th:href="@{/Cliente/formulario/} + ${cliente.id}" class="btn-editar">Editar</a>
+                        <a th:href="@{/Cliente/eliminar/} + ${cliente.id}" onclick="return confirm('¿Seguro que deseas eliminar este cliente?');" class="btn-eliminar">Eliminar</a>
                     </div>
                 </div>
 
-                <div class="rejilla-informacion">
-                    <div class="bloque-informacion">
-                        <span class="etiqueta-campo">Nombre Completo</span>
-                        <p class="valor-campo" th:text="${cliente.nombre + ' ' + cliente.apellido}"></p>
+                <!-- Rejilla de información -->
+                <div class="rejilla-datos">
+                    <div class="bloque-dato">
+                        <span class="etiqueta-dato">Nombre Completo</span>
+                        <p class="valor-dato" th:text="${cliente.nombre + ' ' + cliente.apellido}"></p>
                     </div>
 
-                    <div class="bloque-informacion">
-                        <span class="etiqueta-campo">Correo Electrónico</span>
-                        <p class="valor-campo" th:text="${cliente.email}"></p>
+                    <div class="bloque-dato">
+                        <span class="etiqueta-dato">Correo Electrónico</span>
+                        <p class="valor-dato" th:text="${cliente.email}"></p>
                     </div>
 
-                    <div class="bloque-informacion">
-                        <span class="etiqueta-campo">Fecha de Registro</span>
-                        <p class="valor-campo" th:text="${#dates.format(cliente.createAt, 'dd/MM/yyyy HH:mm')}"></p>
+                    <div class="bloque-dato">
+                        <span class="etiqueta-dato">Fecha de Registro</span>
+                        <p class="valor-dato" th:text="${#dates.format(cliente.createAt, 'dd/MM/yyyy HH:mm')}"></p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Pie de página -->
         <p class="nota-pie">Sistema de Consulta de Clientes &bull; Spring Boot & Thymeleaf</p>
     </div>
 </body>

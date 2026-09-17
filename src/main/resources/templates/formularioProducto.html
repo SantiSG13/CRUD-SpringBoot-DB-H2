@@ -5,53 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titulo}">Formulario de Producto</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Hoja de estilos estática -->
+    <!-- Hoja de estilos estática centralizada -->
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
 <body>
-    <div class="envoltorio-formulario">
+    <div class="contenedor-formulario-padre">
+        
+        <!-- Tarjeta del Formulario -->
         <div class="caja-formulario">
-            <h1 class="titulo-principal" style="text-align: center; margin-bottom: 1.5rem;" th:text="${titulo}">Formulario de Producto</h1>
+            <h1 class="titulo-pagina titulo-centrado" th:text="${titulo}">Formulario de Producto</h1>
 
             <form th:action="@{/Producto/formulario}" th:object="${producto}" method="post">
                 <input type="hidden" th:field="*{id}" />
 
-                <div class="grupo-campo">
-                    <label for="nombre">Nombre del Producto</label>
-                    <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingrese el nombre del producto" required />
+                <div class="grupo-input">
+                    <label for="nombre" class="etiqueta-input">Nombre del Producto</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ingrese el nombre del producto" required class="campo-texto" />
                 </div>
 
-                <div class="grupo-campo">
-                    <label for="precio">Precio ($)</label>
-                    <input type="number" step="0.01" min="0" id="precio" th:field="*{precio}" placeholder="0.00" required />
+                <div class="grupo-input-doble">
+                    <div class="grupo-input">
+                        <label for="precio" class="etiqueta-input">Precio ($)</label>
+                        <input type="number" step="0.01" min="0" id="precio" th:field="*{precio}" placeholder="0.00" required class="campo-texto" />
+                    </div>
+                    <div class="grupo-input">
+                        <label for="stock" class="etiqueta-input">Stock</label>
+                        <input type="number" min="0" id="stock" th:field="*{stock}" placeholder="Cantidad" required class="campo-texto" />
+                    </div>
                 </div>
 
-                <div class="grupo-campo">
-                    <label for="stock">Stock</label>
-                    <input type="number" min="0" id="stock" th:field="*{stock}" placeholder="Ingrese la cantidad en stock" required />
+                <div class="grupo-input">
+                    <label for="categoria" class="etiqueta-input">Categoría</label>
+                    <input type="text" id="categoria" th:field="*{categoria}" placeholder="Ej: Electrónica, Ropa, etc." required class="campo-texto" />
                 </div>
 
-                <div class="grupo-campo">
-                    <label for="categoria">Categoría</label>
-                    <input type="text" id="categoria" th:field="*{categoria}" placeholder="Ej: Electrónica, Ropa, etc." required />
+                <div class="grupo-input">
+                    <label for="descripcion" class="etiqueta-input">Descripción</label>
+                    <input type="text" id="descripcion" th:field="*{descripcion}" placeholder="Breve descripción del producto" class="campo-texto" />
                 </div>
 
-                <div class="grupo-campo">
-                    <label for="descripcion">Descripción</label>
-                    <input type="text" id="descripcion" th:field="*{descripcion}" placeholder="Breve descripción del producto" />
-                </div>
-
+                <!-- Botones del Formulario -->
                 <div class="grupo-botones">
-                    <a th:href="@{/Producto/listar}" class="boton boton-secundario">Cancelar</a>
-                    <button type="submit" class="boton boton-principal">Guardar Producto</button>
+                    <a th:href="@{/Producto/listar}" class="btn btn-secundario boton-medio">Cancelar</a>
+                    <button type="submit" class="btn btn-principal boton-medio">Guardar Producto</button>
                 </div>
             </form>
         </div>
+
     </div>
 </body>
 

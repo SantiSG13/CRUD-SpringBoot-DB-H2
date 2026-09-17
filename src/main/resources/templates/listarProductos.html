@@ -5,78 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titulo}">Listado de Productos</title>
-    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-        rel="stylesheet">
 
-    <!-- Hoja de estilos estática -->
+    <!-- Hoja de estilos estática centralizada -->
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
 <body>
     <div class="contenedor-principal">
-        <h1 class="titulo-principal" th:text="${titulo}">Listado de Productos</h1>
-        <p class="subtitulo-principal">Gestión e inventario de productos del sistema</p>
 
-        <!-- Vista rápida de Atributos -->
-        <ul class="resumen-campos">
-            <li>ID</li>
-            <li>Nombre</li>
-            <li>Precio</li>
-            <li>Stock</li>
-            <li>Categoría</li>
-            <li>Descripción</li>
-        </ul>
-
-        <!-- Botones de Acción -->
-        <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-            <a th:href="@{/Cliente/listar}" class="boton boton-secundario" style="max-width: 180px;">&larr; Ver Clientes</a>
-            <a th:href="@{/Producto/formulario}" class="boton boton-principal" style="max-width: 180px;">+ Crear Producto</a>
+        <!-- Encabezado de la página -->
+        <div class="encabezado-seccion">
+            <h1 class="titulo-pagina" th:text="${titulo}">Listado de Productos</h1>
+            <p class="subtitulo-pagina">Gestión e inventario de productos del sistema</p>
         </div>
 
-        <div class="linea-divisora"></div>
+        <!-- Atributos del modelo (Badges) -->
+        <ul class="lista-atributos">
+            <li class="insignia">ID</li>
+            <li class="insignia">Nombre</li>
+            <li class="insignia">Precio</li>
+            <li class="insignia">Stock</li>
+            <li class="insignia">Categoría</li>
+            <li class="insignia">Descripción</li>
+        </ul>
 
-        <!-- Lista de Tarjetas de Productos -->
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-            <div class="tarjeta" th:each="producto : ${productos}">
-                <div class="encabezado-tarjeta">
-                    <h2 class="titulo-tarjeta" th:text="${producto.nombre}"></h2>
-                    <div style="display: flex; align-items: center; gap: 0.8rem;">
-                        <span class="etiqueta-id" th:text="${'ID #' + producto.id}"></span>
-                        <a th:href="@{/Producto/formulario/} + ${producto.id}" class="boton-editar">Editar</a>
-                        <a th:href="@{/Producto/eliminar/} + ${producto.id}"
-                            onclick="return confirm('¿Seguro que deseas eliminar este producto?');"
-                            class="boton-eliminar">Eliminar</a>
+        <!-- Botones de navegación y acción -->
+        <div class="barra-acciones">
+            <a th:href="@{/Cliente/listar}" class="btn btn-secundario">&larr; Ver Clientes</a>
+            <a th:href="@{/Producto/formulario}" class="btn btn-principal">+ Crear Producto</a>
+        </div>
+
+        <div class="linea-separadora"></div>
+
+        <!-- Lista de Productos en Tarjetas -->
+        <div>
+            <div th:each="producto : ${productos}" class="tarjeta-registro">
+                
+                <!-- Cabecera de la tarjeta -->
+                <div class="tarjeta-cabecera">
+                    <h2 class="tarjeta-titulo" th:text="${producto.nombre}"></h2>
+                    
+                    <div class="tarjeta-acciones">
+                        <span class="insignia" th:text="${'ID #' + producto.id}"></span>
+                        <a th:href="@{/Producto/formulario/} + ${producto.id}" class="btn-editar">Editar</a>
+                        <a th:href="@{/Producto/eliminar/} + ${producto.id}" onclick="return confirm('¿Seguro que deseas eliminar este producto?');" class="btn-eliminar">Eliminar</a>
                     </div>
                 </div>
 
-                <div class="rejilla-informacion">
-                    <div class="bloque-informacion">
-                        <span class="etiqueta-campo">Categoría</span>
-                        <p class="valor-campo" th:text="${producto.categoria}"></p>
+                <!-- Rejilla de información -->
+                <div class="rejilla-datos">
+                    <div class="bloque-dato">
+                        <span class="etiqueta-dato">Categoría</span>
+                        <p class="valor-dato" th:text="${producto.categoria}"></p>
                     </div>
 
-                    <div class="bloque-informacion">
-                        <span class="etiqueta-campo">Precio</span>
-                        <p class="valor-campo" th:text="${'$' + #numbers.formatDecimal(producto.precio, 1, 'POINT', 2, 'COMMA')}"></p>
+                    <div class="bloque-dato">
+                        <span class="etiqueta-dato">Precio</span>
+                        <p class="valor-dato" th:text="${'$' + #numbers.formatDecimal(producto.precio, 1, 'POINT', 2, 'COMMA')}"></p>
                     </div>
 
-                    <div class="bloque-informacion">
-                        <span class="etiqueta-campo">Stock Disponible</span>
-                        <p class="valor-campo" th:text="${producto.stock + ' unidades'}"></p>
+                    <div class="bloque-dato">
+                        <span class="etiqueta-dato">Stock Disponible</span>
+                        <p class="valor-dato" th:text="${producto.stock + ' unidades'}"></p>
                     </div>
 
-                    <div class="bloque-informacion" style="grid-column: 1 / -1;">
-                        <span class="etiqueta-campo">Descripción</span>
-                        <p class="valor-campo" th:text="${producto.descripcion != null && !producto.descripcion.isEmpty() ? producto.descripcion : 'Sin descripción'}"></p>
+                    <div class="bloque-dato campo-ancho-completo">
+                        <span class="etiqueta-dato">Descripción</span>
+                        <p class="valor-dato" th:text="${producto.descripcion != null && !producto.descripcion.isEmpty() ? producto.descripcion : 'Sin descripción'}"></p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Pie de página -->
         <p class="nota-pie">Sistema de Inventario de Productos &bull; Spring Boot & Thymeleaf</p>
     </div>
 </body>
